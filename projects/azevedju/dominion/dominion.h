@@ -73,6 +73,17 @@ struct gameState {
   int playedCardCount;
 };
 
+//REFACTORED CARD FUNCTION HEADERS
+int adventurerEffect(int currentPlayer, struct gameState *state);
+
+int smithyEffect(int currentPlayer, struct gameState *state, int handPos);
+
+int council_roomEffect(int currentPlayer, struct gameState *state, int handPos);
+
+int villageEffect(int currentPlayer, struct gameState *state, int handPos);
+
+int great_hallEffect(int currentPlayer, struct gameState *state, int handPos);
+
 /* All functions return -1 on failure, and DO NOT CHANGE GAME STATE;
    unless specified for other return, return 0 on success */
 
