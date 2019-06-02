@@ -57,7 +57,7 @@ int main() {
 
 	memcpy(&testState, &state, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus);
-	printf("TEST1: Adventurer successfully adds two coppers to hand from bottom of deck. \n\n");
+	printf("TEST 1: Adventurer successfully adds two coppers to hand from bottom of deck. \n\n");
 
 	printf("Cards in hand: \n");
 	for(i = 0 ; i < testState.handCount[currentPlayer]; ++i){
@@ -100,7 +100,7 @@ int main() {
 
 	memcpy(&testState, &state, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus);
-	printf("TEST2: Adventurer has one copper in the deck. \n\n");
+	printf("TEST 2: Adventurer has one copper in the deck. \n\n");
 
 	printf("Cards in hand: \n");
 	for(i = 0 ; i < testState.handCount[currentPlayer]; ++i){
@@ -142,9 +142,10 @@ int main() {
 
 	memcpy(&testState, &state, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus);
-	printf("TEST3: Adventurer has no copper in the deck. \n\n");
+	printf("TEST 3: Adventurer has no copper in the deck. \n\n");
 
 	printf("Cards in hand: \n");
+	copperFound = 0;
 	for(i = 0 ; i < testState.handCount[currentPlayer]; ++i){
 		if(testState.hand[currentPlayer][i] == province){
 			printf("Card %d: province\n", i);

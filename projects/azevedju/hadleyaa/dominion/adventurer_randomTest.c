@@ -66,7 +66,6 @@ int testAdventurer(struct gameState *randState, int player, int round){
 	}
 
 	adventurerEffect(adventurer, choice1, choice2, choice3, randState, handpos, &bonus, player);
-	//cardEffect(adventurer, choice1, choice2, choice3, randState, handpos, &bonus);
 
 	//Count treasure cards in preState hand
 	for(i = 0 ; i < preState.handCount[player] ; i++){
@@ -106,6 +105,7 @@ int testAdventurer(struct gameState *randState, int player, int round){
 		for(i = 0 ; i < 2 ; ++i){
 			drawCard(player, &preState);
 		}
+		
 		returnVal = assertTrue(preTreasure + 2, randTreasure, "Treasure Cards in Hand");
 	}
 
@@ -117,9 +117,11 @@ int testAdventurer(struct gameState *randState, int player, int round){
 	printf("Player %d: ", player);
 	returnVal = assertTrue(preState.handCount[player], randState->handCount[player], "Hand Count");
 	
-	//Check deckCount
+	//Check total cards discard + deckCount 
+	int randCardTotal = (randState->deckCount[player]) + (randState->discardCount[player]);
+	int preCardTotal = (preState.deckCount[player]) + (preState.discardCount[player]);
 	printf("Player %d: ", player);
-	returnVal = assertTrue(preState.deckCount[player], randState->deckCount[player], "Deck Count");
+	returnVal = assertTrue(preCardTotal ,randCardTotal, "Deck + Discard Count");
 
 	//Check all opponents for hand and deck changes
 	for(i = 0; i < preState.numPlayers ; i++){
@@ -152,23 +154,19 @@ int testAdventurer(struct gameState *randState, int player, int round){
 //Description: Loads struct gameState with randomly generated values. 
 int randomizeGame(struct gameState *randState){ 
 
-	int i;
+
 	int player; 
 	int seed = 8;
 	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy, council_room};
 
-	randState->numPlayers = rand() % MAX_PLAYERS + 1;
-	player = rand() % 2;
+	randState->numPlayers = 2;//rand() % MAX_PLAYERS + 1;
+	player = 0; //rand() % 2;
 	initializeGame(randState->numPlayers, k, seed, randState);
-	randState->deckCount[player] = rand() % MAX_DECK + 1; 
-	randState->handCount[player] = rand() % MAX_HAND + 1;
-	randState->discardCount[player] = rand() % MAX_DECK + 1;
+	randState->deckCount[player] = rand() % (MAX_DECK - 50) + 50; 
+	randState->handCount[player] = rand() % (MAX_HAND - 50) + 50;
+	randState->discardCount[player] = rand() % (MAX_DECK -50) + 50;
 	randState->numBuys = rand() % 1000;
 
-	//Randomize player deck contents
-	for(i = 0 ; i < randState->deckCount[player]; i++){
-		randState->deck[player][i] = rand() % 27;
-	}
 	
 	return player;
 
@@ -182,13 +180,13 @@ int randomizeGame(struct gameState *randState){
 void printGameState(struct gameState *state, int player, int round){
 	printf("Round: %d\n", round);
 	printf("----------------------------------------------\n");
-	printf("Player: %d\n", player);
-	printf("numPlayers: %d\n", state->numPlayers);
-	printf("numBuys: %d\n", state->numBuys);
-	printf("whoseTurn: %d\n", state->whoseTurn);
-	printf("phase: %d\n", state->phase);
-	printf("numActions: %d\n", state->numActions);
-	printf("coins: %d\n", state->coins);
+	//printf("Player: %d\n", player);
+	//printf("numPlayers: %d\n", state->numPlayers);
+	//printf("numBuys: %d\n", state->numBuys);
+	//printf("whoseTurn: %d\n", state->whoseTurn);
+	//printf("phase: %d\n", state->phase);
+	//printf("numActions: %d\n", state->numActions);
+	//printf("coins: %d\n", state->coins);
 	printf("handCount: %d\n", state->handCount[player]);
 	printf("deckCount: %d\n", state->deckCount[player]);
 	printf("discardCount: %d\n", state->discardCount[player]);
@@ -212,7 +210,6 @@ int main () {
 		memcpy(&randState, "0", sizeof(struct gameState));
 
 		player = randomizeGame(&randState);
-		printGameState(&randState, player, i);		
 		passFail = testAdventurer(&randState, player, i);
 	}
 	

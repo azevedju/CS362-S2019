@@ -13,22 +13,7 @@ testDrawCard: testDrawCard.c dominion.o rngs.o
 	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
 
 
-adventRand: adventurer_randomTest.c dominion.o rngs.o
-	gcc -o adventurer_randomTest -g adventurer_randomTest.c dominion.o rngs.o $(CFLAGS)
-
-smithyTests: smithy_cardTest.c smithy_randomTest.c dominion.o rngs.o
-	echo "Smithy Tests" >> testResults.out
-	echo "*******************************************************" >> testResults.out
-	echo "smithy_cardTest.c" >> testResults.out
-	gcc -o smithy_cardTest -g smithy_cardTest.c dominion.o rngs.o $(CFLAGS)
-	./smithy_cardTest >> testResults.out
-	echo "*******************************************************" >> testResults.out
-	echo "smithy_randomTest.c" >> testResults.out
-	gcc -o smithy_randomTest -g smithy_randomTest.c dominion.o rngs.o $(CFLAGS)
-	./smithy_randomTest >> testResults.out
-	echo "*******************************************************" >> testResults.out
-
-unitTestResults: adventurer_cardTest.c adventurer_randomTest.c adventurer_unitTest.c smithy_cardTest.c smithy_randomTest.c dominion.o rngs.o
+testTeamMate: adventurer_cardTest.c adventurer_randomTest.c adventurer_unitTest.c smithy_cardTest.c smithy_randomTest.c dominion.o rngs.o
 	echo "Adventurer Tests" >> testResults.out
 	echo "*******************************************************" >> testResults.out
 	echo "adventurer_cardTest.c" >> testResults.out
@@ -53,7 +38,8 @@ unitTestResults: adventurer_cardTest.c adventurer_randomTest.c adventurer_unitTe
 	gcc -o smithy_randomTest -g smithy_randomTest.c dominion.o rngs.o $(CFLAGS)
 	./smithy_randomTest >> testResults.out
 	echo "*******************************************************" >> testResults.out
-	echo gcov dominion.c -f -b >> testResults.out
+	echo gcov -f -b dominion.c >> testResults.out
+	gcov -f -b dominion.c >> testResults.out
 #########
 
 badTestDrawCard: badTestDrawCard.c dominion.o rngs.o
