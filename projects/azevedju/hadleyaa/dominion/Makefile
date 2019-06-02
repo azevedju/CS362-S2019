@@ -13,6 +13,47 @@ testDrawCard: testDrawCard.c dominion.o rngs.o
 	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
 
 
+adventRand: adventurer_randomTest.c dominion.o rngs.o
+	gcc -o adventurer_randomTest -g adventurer_randomTest.c dominion.o rngs.o $(CFLAGS)
+
+smithyTests: smithy_cardTest.c smithy_randomTest.c dominion.o rngs.o
+	echo "Smithy Tests" >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "smithy_cardTest.c" >> testResults.out
+	gcc -o smithy_cardTest -g smithy_cardTest.c dominion.o rngs.o $(CFLAGS)
+	./smithy_cardTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "smithy_randomTest.c" >> testResults.out
+	gcc -o smithy_randomTest -g smithy_randomTest.c dominion.o rngs.o $(CFLAGS)
+	./smithy_randomTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+
+unitTestResults: adventurer_cardTest.c adventurer_randomTest.c adventurer_unitTest.c smithy_cardTest.c smithy_randomTest.c dominion.o rngs.o
+	echo "Adventurer Tests" >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "adventurer_cardTest.c" >> testResults.out
+	gcc -o adventurer_cardTest -g adventurer_cardTest.c dominion.o rngs.o $(CFLAGS)
+	./adventurer_cardTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "adventurer_unitTest.c" >> testResults.out
+	gcc -o adventurer_unitTest -g adventurer_unitTest.c dominion.o rngs.o $(CFLAGS)
+	./adventurer_unitTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "adventurer_randomTest.c" >> testResults.out
+	gcc -o adventurer_randomTest -g adventurer_randomTest.c dominion.o rngs.o $(CFLAGS)
+	./adventurer_randomTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "Smithy Tests" >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "smithy_cardTest.c" >> testResults.out
+	gcc -o smithy_cardTest -g smithy_cardTest.c dominion.o rngs.o $(CFLAGS)
+	./smithy_cardTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo "smithy_randomTest.c" >> testResults.out
+	gcc -o smithy_randomTest -g smithy_randomTest.c dominion.o rngs.o $(CFLAGS)
+	./smithy_randomTest >> testResults.out
+	echo "*******************************************************" >> testResults.out
+	echo gcov dominion.c -f -b >> testResults.out
 #########
 
 badTestDrawCard: badTestDrawCard.c dominion.o rngs.o
@@ -39,4 +80,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe *.out *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe

@@ -538,7 +538,7 @@ int drawCard(int player, struct gameState *state)
     state->deckCount[player] = state->discardCount[player];
     state->discardCount[player] = 0;//Reset discard
 
-    //Shufffle the deck
+    //Shuffle the deck
     shuffle(player, state);//Shuffle the deck up and make it so that we can draw
    
     if (DEBUG){//Debug statements
@@ -654,7 +654,7 @@ int adventurerEffect(int card, int choice1, int choice2, int choice3, struct gam
 	   if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	       shuffle(currentPlayer, state);
 	   }
-        drawCard(currentPlayer, state);
+        rdrawCard(currentPlayer, state);
         drawCard(currentPlayer, state);
         cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
         if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold){

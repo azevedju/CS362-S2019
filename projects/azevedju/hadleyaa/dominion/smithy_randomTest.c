@@ -47,13 +47,14 @@ int assertTrue(int comp1, int comp2, char *testType){
 int testSmithy(struct gameState *randState, int player, int round){
 	struct gameState preState;
 	int handpos = 0;
+	int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
 	int returnVal = -1;
 	int i;
 	int preSupply = 0;
 	int randSupply = 0;
 	memcpy(&preState, randState, sizeof(struct gameState));
 
-	smithyEffect(player, randState, handpos);
+	smithyEffect(smithy, choice1, choice2, choice3, randState, handpos, &bonus, player);
 
 	for(i = 0 ; i < 3 ; i++){
 			drawCard(player, &preState);

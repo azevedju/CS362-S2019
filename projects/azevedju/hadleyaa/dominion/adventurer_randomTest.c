@@ -47,6 +47,7 @@ int assertTrue(int comp1, int comp2, char *testType){
 int testAdventurer(struct gameState *randState, int player, int round){
 	struct gameState preState;
 	int handpos = 0;
+	int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
 	int returnVal = -1;
 	int i;
 	int preSupply = 0;
@@ -56,7 +57,7 @@ int testAdventurer(struct gameState *randState, int player, int round){
 	int deckTreasure = 0;
 	memcpy(&preState, randState, sizeof(struct gameState));
 
-	
+
 	//Check that treasure exists in deck
 	for(i = 0 ; i < randState->deckCount[player] ; ++i){
 		if(randState->deck[player][i] == copper || randState->deck[player][i] == silver || randState->deck[player][i] == gold){
@@ -64,7 +65,8 @@ int testAdventurer(struct gameState *randState, int player, int round){
 		}
 	}
 
-	adventurerEffect(player, randState);
+	adventurerEffect(adventurer, choice1, choice2, choice3, randState, handpos, &bonus, player);
+	//cardEffect(adventurer, choice1, choice2, choice3, randState, handpos, &bonus);
 
 	//Count treasure cards in preState hand
 	for(i = 0 ; i < preState.handCount[player] ; i++){
@@ -158,9 +160,9 @@ int randomizeGame(struct gameState *randState){
 	randState->numPlayers = rand() % MAX_PLAYERS + 1;
 	player = rand() % 2;
 	initializeGame(randState->numPlayers, k, seed, randState);
-	randState->deckCount[player] = rand() % MAX_DECK; 
-	randState->handCount[player] = rand() % MAX_HAND;
-	randState->discardCount[player] = rand() % MAX_DECK;
+	randState->deckCount[player] = rand() % MAX_DECK + 1; 
+	randState->handCount[player] = rand() % MAX_HAND + 1;
+	randState->discardCount[player] = rand() % MAX_DECK + 1;
 	randState->numBuys = rand() % 1000;
 
 	//Randomize player deck contents
@@ -210,6 +212,7 @@ int main () {
 		memcpy(&randState, "0", sizeof(struct gameState));
 
 		player = randomizeGame(&randState);
+		printGameState(&randState, player, i);		
 		passFail = testAdventurer(&randState, player, i);
 	}
 	

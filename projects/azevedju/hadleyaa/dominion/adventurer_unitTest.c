@@ -20,6 +20,8 @@ void assertTrue(int testResult, int correctResult){
 
 int main() {
 
+	int handPos = 0;
+	int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
 	int currentPlayer = 0; 
 	int otherPlayer = 1;
 	int numPlayers = 2;
@@ -38,7 +40,8 @@ int main() {
 
 	//------------------- TEST 1: Player draws two cards ----------------
 	memcpy(&testState, &state, sizeof(struct gameState));
-	adventurerEffect(currentPlayer, &testState);
+	
+	adventurerEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus, currentPlayer);
 
 	printf("TEST 1: Player draws two additional cards \n");
 	cardsDrawn = 2;
@@ -48,8 +51,8 @@ int main() {
 
 	//------------------ TEST 2: Cards drawn are treasure cards --------
 	memcpy(&testState, &state, sizeof(struct gameState));
-	adventurerEffect(currentPlayer, &testState);
-
+	adventurerEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus, currentPlayer);
+	
 	printf("TEST 2: Drawn cards are treasure cards\n");
 	int i; 
 	int treasureCards = 0;
@@ -79,7 +82,7 @@ int main() {
 
 	//-------------------- TEST 3: Player draws cards from own deck --------- 
 	memcpy(&testState, &state, sizeof(struct gameState));
-	adventurerEffect(currentPlayer, &testState);
+	adventurerEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus, currentPlayer);
 
 	printf("TEST 3: Player draws from own deck\n");
 	int testDeckTotal = testState.handCount[currentPlayer] + testState.discardCount[currentPlayer] + testState.deckCount[currentPlayer] ;
@@ -90,7 +93,7 @@ int main() {
 
 	//-------------------- TEST 4: No cards drawn from opponents deck -------
 	memcpy(&testState, &state, sizeof(struct gameState));
-	adventurerEffect(currentPlayer, &testState);
+	adventurerEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus, currentPlayer);
 
 	printf("TEST 4: No cards drawn from opponents deck\n");
 	printf("Deck count = %d, expected = %d\n", testState.deckCount[otherPlayer], state.deckCount[otherPlayer]);
@@ -99,7 +102,7 @@ int main() {
 
 	//-------------------- TEST 5: Test that other player does not draw a card ------------
 	memcpy(&testState, &state, sizeof(struct gameState));
-	adventurerEffect(currentPlayer, &testState);
+	adventurerEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus, currentPlayer);
 
 	printf("TEST 5: Check that other player does not draw a card\n");
 	printf("Hand count = %d, expected = %d\n", testState.handCount[otherPlayer], state.handCount[otherPlayer]);
@@ -107,7 +110,7 @@ int main() {
 
 	//-------------------- TEST 6: Test for change in supply pile -----------------
 	memcpy(&testState, &state, sizeof(struct gameState));
-	adventurerEffect(currentPlayer, &testState);
+	adventurerEffect(adventurer, choice1, choice2, choice3, &testState, handPos, &bonus, currentPlayer);
 
 	printf("TEST 6: Check for change in supply pile\n");
 	int testSupply = 0; 
